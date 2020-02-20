@@ -1,11 +1,13 @@
 - [ ] refactorings
-  - [ ] es modules
+  - [x] es modules
   - [ ] update dependencies
   - [ ] code style
   - [ ] cli arguments
   - [ ] markdown readme
-  - [ ] drop coffescript
+  - [x] drop coffescript
 - [ ] features
   - [ ] browsers build
   - [ ] bench.skip and suite.skip
   - [ ] config files
+  - [ ] html reporter
+  - [ ] typescript support
