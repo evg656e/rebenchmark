@@ -1,0 +1,11 @@
+- [ ] refactorings
+  - [ ] es modules
+  - [ ] update dependencies
+  - [ ] code style
+  - [ ] cli arguments
+  - [ ] markdown readme
+  - [ ] drop coffescript
+- [ ] features
+  - [ ] browsers build
+  - [ ] bench.skip and suite.skip
+  - [ ] config files
