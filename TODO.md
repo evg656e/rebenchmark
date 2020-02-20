@@ -1,7 +1,7 @@
 - [ ] refactorings
   - [x] es modules
-  - [ ] update dependencies
-  - [ ] code style
+  - [x] update dependencies
+  - [x] code style
   - [ ] cli arguments
   - [ ] markdown readme
   - [x] drop coffescript
