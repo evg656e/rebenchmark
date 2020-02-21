@@ -2,12 +2,12 @@
   - [x] es modules
   - [x] update dependencies
   - [x] code style
-  - [ ] cli arguments
+  - [x] cli arguments
   - [ ] markdown readme
   - [x] drop coffescript
 - [ ] features
+  - [x] config files
   - [ ] browsers build
-  - [ ] bench.skip and suite.skip
-  - [ ] config files
   - [ ] html reporter
+  - [ ] bench.skip, suite.skip, bench.only, suite.only
   - [ ] typescript support
