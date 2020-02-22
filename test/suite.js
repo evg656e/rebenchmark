@@ -1,6 +1,6 @@
 import assert from 'assert';
 import Suite from '../lib/suite';
-import StringReporter from '../lib/reporters/string';
+import StringReporter from '../lib/reporters/StringReporter';
 
 const b1 = () => 'Hello World!'.indexOf('o') > -1;
 

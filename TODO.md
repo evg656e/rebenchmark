@@ -7,7 +7,7 @@
   - [x] drop coffescript
 - [ ] features
   - [x] config files
-  - [ ] browsers build
+  - [x] browsers build
   - [ ] html reporter
   - [ ] bench.skip, suite.skip, bench.only, suite.only
   - [ ] typescript support

@@ -4,8 +4,14 @@
   "description": "Benchmark.js runner for Node.js and browsers with BDD interface (like Mocha).",
   "main": "index.js",
   "type": "module",
+  "engines": {
+    "node": ">=13.2.0"
+  },
   "scripts": {
     "start": "node --experimental-specifier-resolution=node ./bin/rebenchmark",
+    "build": "npm run build:dev && npm run build:prod",
+    "build:dev": "webpack --config=./webpack.config.cjs --mode development",
+    "build:prod": "webpack --config=./webpack.config.cjs -p",
     "test": "node --experimental-specifier-resolution=node ./node_modules/mocha/bin/mocha ./test/*.js"
   },
   "repository": {
@@ -34,7 +40,10 @@
   "devDependencies": {
     "@types/lodash": "^4.14.149",
     "@types/mocha": "^7.0.1",
+    "@types/webpack": "^4.41.6",
     "@types/yargs": "^15.0.3",
-    "mocha": "^7.0.0-esm1"
+    "mocha": "^7.0.0-esm1",
+    "webpack": "^4.41.6",
+    "webpack-cli": "^3.3.11"
   }
 }
