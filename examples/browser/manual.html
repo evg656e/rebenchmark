@@ -1,18 +1,22 @@
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Rebenchmark (manual setup)</title>
+    <title>Rebenchmark</title>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/lodash.js/4.17.15/lodash.min.js"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/platform/1.3.5/platform.min.js"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/benchmark/2.1.4/benchmark.min.js"></script>
     <script src="../../stage/browser/rebenchmark.js" data-no-auto-setup="true"></script>
 </head>
+
 <body>
-    
+    <p id="output"></p>
+
     <script>
         rebenchmark.setup({
+            reporter: new rebenchmark.reporters.HTMLReporter({ root: document.querySelector('#output') }),
             platform: true,
             filter: 'fastest'
         });
@@ -20,7 +24,10 @@
     <script src="../benchmarks/es5_vs_es6.js"></script>
     <script src="../benchmarks/string.js"></script>
     <script>
-        rebenchmark.run();
+        rebenchmark.run().then(() => {
+            console.log('All done!');
+        });
     </script>
 </body>
+
 </html>

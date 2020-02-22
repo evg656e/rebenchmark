@@ -9,6 +9,6 @@
   - [x] config files
   - [x] browsers build
   - [x] becnhmarks pending
-  - [ ] html reporter
+  - [x] html reporter
   - [ ] bench.skip, suite.skip, bench.only, suite.only
   - [ ] typescript support
