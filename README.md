@@ -181,8 +181,6 @@ Options:
                                                    [string] [default: "console"]
   --reporter-options, -O  Reporter-specific options (<k1=v1[,k2=v2,..]>) [array]
   --platform, -p          Print platform information                   [boolean]
-  --filter, -f            Report filtered (e.g. fastest) benchmark after suite
-                          runs     [choices: "fastest", "slowest", "successful"]
   --delay                 The delay between test cycles (secs)          [number]
   --init-count            The default number of times to execute a test on a
                           benchmark’s first cycle                       [number]
@@ -330,8 +328,7 @@ Automatic setup (default):
     <pre id="rebenchmark"></pre> 
 
     <!-- Options can be passed using data-attributes -->
-    <script src="https://unpkg.com/rebenchmark/stage/browser/rebenchmark.min.js" data-filter="fastest"
-        data-platform="true"></script> 
+    <script src="https://unpkg.com/rebenchmark/stage/browser/rebenchmark.min.js" data-platform="true"></script> 
     <script src="benchmarks/es5_vs_es6.js"></script>
     <script>
         suite('find in string', () => {
@@ -366,9 +363,11 @@ Manual setup:
     <script src="https://unpkg.com/rebenchmark/stage/browser/rebenchmark.min.js" data-no-auto-setup="true"></script> 
     <script>
         rebenchmark.setup({
-            reporter: new rebenchmark.reporters.HTMLReporter({ root: document.querySelector('#rebenchmark') }),
-            platform: true,
-            filter: 'fastest'
+            reporter: new rebenchmark.reporters.HTMLReporter({
+                root: document.querySelector('#rebenchmark'),
+                filter: 'fastest'
+            }),
+            platform: true
         });
     </script>
     <script src="benchmarks/es5_vs_es6.js"></script>
@@ -431,15 +430,28 @@ suite('hooks', function () {
 
 ### console
 
-The default reporter. Pretty prints results via `console.log`. Accepts `indent` option (the number of spaces) used to insert white space into the output for readability purposes.
+The default reporter. Pretty prints results via `console.log`.
+
+Options:
+  * `indent` - number of spaces used to insert white space into the output for readability purposes
+  * `filter` - print filtered  (e.g. fastest) benchmark after suite (choices: "fastest", "slowest", "successful")
 
 ### json
 
-Outputs a single large JSON object when the tests have completed. Accepts `indent` option like mentioned above.
+Outputs a single large JSON object when the tests have completed.
+
+Options:
+  * `indent` - number of spaces used to insert white space into the output for readability purposes.
 
 ### html
 
-Prints results into element, provided by the `root` option (could be element by itself or string with CSS-selector), and duplicates output to the console. To suppress console output, set `echo` option to `false`. Accepts `indent` option like mentioned above. Intended for use only on browsers.
+Prints results into HTML element. Intended for use only on browsers.
+
+Options:
+  * `root` - CSS-selector or HTML-element by itself where to print results
+  * `echo` - whether to duplicate output to console (`true` by default)
+
+And all options inherited from [console](#console) reporter.
 
 ### null
 
