@@ -11,6 +11,9 @@
     - [ ] legacy browsers support (?)
   - [x] becnhmarks pending
   - [x] html reporter
+  - [ ] results comparison
+    - [ ] bars
+    - [ ] table
   - [ ] bench.skip, suite.skip, bench.only, suite.only
   - [ ] typescript support
     - [ ] @types/rebenchmark
