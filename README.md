@@ -257,7 +257,7 @@ Reporter-specific options, e.g.:
 rebenchmark -R console -O indent=4
 ```
 
-**--delay, --max-time, --min-samples, --min-time**
+**--delay, --init-count, --max-time, --min-samples, --min-time**
 
 These options are passed directly to `benchmark.js`.
 
