@@ -11,6 +11,8 @@ globalThis.rebenchmark = {
 };
 
 const scriptOpts = {
+    filter: 'fastest',
+    platform: true,
     reporter: new reporters.HTMLReporter({ root: '#rebenchmark' }),
     ...document && document.currentScript && document.currentScript.dataset,
     autoRun: true
