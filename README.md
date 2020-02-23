@@ -1,5 +1,7 @@
 # rebenchmark
 
+[![npm](https://img.shields.io/npm/v/rebenchmark.svg)](https://www.npmjs.com/package/rebenchmark)
+
 [Benchmark.js](https://benchmarkjs.com) runner for [Node.js](https://nodejs.org) and browsers with BDD interface (like [Mocha](https://mochajs.org/)).
 
 [Online Playground](https://jsfiddle.net/evg656e/hz4co8x3/)

@@ -1,6 +1,6 @@
 {
   "name": "rebenchmark",
-  "version": "1.0.0",
+  "version": "1.0.1",
   "description": "Benchmark.js runner for Node.js and browsers with BDD interface (like Mocha).",
   "main": "index.js",
   "type": "module",
