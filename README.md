@@ -2,9 +2,7 @@
 
 [Benchmark.js](https://benchmarkjs.com) runner for [Node.js](https://nodejs.org) and browsers with BDD interface (like [Mocha](https://mochajs.org/)).
 
-Online playgrounds:
- * [JSFiddle](https://jsfiddle.net/evg656e/hz4co8x3/)
- * 
+[Online Playground](https://jsfiddle.net/evg656e/hz4co8x3/)
 
 Based on @venkatperi's [bench-runner](https://github.com/venkatperi/bench-runner).
 
