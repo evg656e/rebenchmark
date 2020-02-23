@@ -3,3 +3,4 @@ package-lock.json
 examples/
 TODO.md
 test/
+webpack.config.cjs
