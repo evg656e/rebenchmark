@@ -2,14 +2,32 @@
 
 [Benchmark.js](https://benchmarkjs.com) runner for [Node.js](https://nodejs.org) and browsers with BDD interface (like [Mocha](https://mochajs.org/)).
 
+Online playgrounds:
+ * [JSFiddle](https://jsfiddle.net/evg656e/hz4co8x3/)
+ * 
+
 Based on @venkatperi's [bench-runner](https://github.com/venkatperi/bench-runner).
 
 ## Table of contents
 
-1. [Getting Started](#1.%20Getting%20Started)
-2. [Suites & Benchmarks](#2.%20Suites%20%26%20Benchmarks)
+* [Getting Started](#Getting%20Started)
+* [Suites & Benchmarks](#2Suites%20%26%20Benchmarks)
+  * [Paths](#Paths)
+  * [Nested Suites & Benchmarks](#Nested%20Suites%20%26%20Benchmarks)
+  * [Benchmarking Asynchronous Functions](#Benchmarking%20Asynchronous%20Functions)
+  * [Dynamically Generating Benchmarks](#Dynamically%20Generating%20Benchmarks)
+ * [Usage](#Usage)
+   * [CLI](#CLI)
+   * [Node.js](#Node.js)
+   * [Browsers](#Browsers)
+* [Hooks](#Hooks)
+* [Reporters](#Reporters)
+  * [console](#console)
+  * [json](#json)
+  * [html](#html)
+  * [null](#null)
 
-## 1. Getting Started
+## Getting Started
 
 Install with `npm`:
 
@@ -41,7 +59,7 @@ $ rebenchmark -f fastest
 fastest: String#indexOf
 ```
 
-## 2. Suites & Benchmarks
+## Suites & Benchmarks
 
 Group benchmarks in a suite:
 
@@ -52,11 +70,11 @@ suite('group-of-tests', () => {
 });
 ```
 
-### 2.1. Paths
+### Paths
 
 Suites and benchmarks are assigned paths which are useful, for example, for filtering with the `grep` option. Paths are constructed by concatenating the names of suites and benchmarks leading to the target, separated with a colon `:`. In the above snippet, benchmark `a-benchmark` has the path `:group-of-tests:a-benchmark`.
 
-### 2.2. Nested Suites & Benchmarks
+### Nested Suites & Benchmarks
 
 Suites can be nested:
 
@@ -76,17 +94,17 @@ suite('es5 vs es6', () => {
     });
 
     suite('arrow functions', () => {
-        var es5obj = {
+        const es5obj = {
             value: 42,
-            fn: function () { return function () { return es5obj.value; }; }
+            fn() { return function () { return es5obj.value; }; }
         };
-        var es5fn = es5obj.fn();
+        const es5fn = es5obj.fn();
 
-        var es6obj = {
+        const es6obj = {
             value: 42,
-            fn: function () { return () => this.value; }
+            fn() { return () => this.value; }
         };
-        var es6fn = es6obj.fn();
+        const es6fn = es6obj.fn();
 
         bench('es5', es5fn);
         bench('es6', es6fn);
@@ -108,7 +126,7 @@ $ rebenchmark -g es5
     es6 x 36,864,672 ops/sec ±1.27% (87 runs sampled)
 ```
 
-### 2.3. Benchmarking Asynchronous Functions
+### Benchmarking Asynchronous Functions
 
 To defer a benchmark, pass an callback argument to the benchmark function. The callback must be called to end the benchmark.
 
@@ -124,7 +142,7 @@ Output:
   timeout x 9.72 ops/sec ±0.41% (49 runs sampled)
 ```
 
-### 2.4. Dynamically Generating Benchmarks
+### Dynamically Generating Benchmarks
 
 Use javascript to generate benchmarks or suites dynamically:
 
@@ -147,9 +165,9 @@ The above code will produce a suite with multiple benchmarks:
   16384 x 199,686 ops/sec ±0.94% (80 runs sampled)
 ```
 
-## 3. Usage
+## Usage
 
-### 3.1 CLI
+### CLI
 
 ```
 rebenchmark [options] <benchmarks..>
@@ -312,7 +330,7 @@ Automatic setup (default):
     <pre id="rebenchmark"></pre> 
 
     <!-- Options can be passed using data-attributes -->
-    <script src="https://unpkg.com/rebenchmark/umd/stage/browser/rebenchmark.min.js" data-filter="fastest"
+    <script src="https://unpkg.com/rebenchmark/stage/browser/rebenchmark.min.js" data-filter="fastest"
         data-platform="true"></script> 
     <script src="benchmarks/es5_vs_es6.js"></script>
     <script>
@@ -345,7 +363,7 @@ Manual setup:
     <pre id="rebenchmark"></pre> 
 
     <!-- To disable automatic setup, set "data-no-auto-setup" to "true" -->
-    <script src="https://unpkg.com/rebenchmark/umd/stage/browser/rebenchmark.min.js" data-no-auto-setup="true"></script> 
+    <script src="https://unpkg.com/rebenchmark/stage/browser/rebenchmark.min.js" data-no-auto-setup="true"></script> 
     <script>
         rebenchmark.setup({
             reporter: new rebenchmark.reporters.HTMLReporter({ root: document.querySelector('#rebenchmark') }),
@@ -374,6 +392,40 @@ Manual setup:
 ## Hooks
 
 Hooks must be synchronous since they are called by `benchmark.js` which does not support async hooks at this time. Also, `setup` and `teardown` are compiled into the test function. Including either may place restrictions on the scoping/availability of variables in the test function (see `benchmark.js` [docs](https://benchmarkjs.com/docs) for more information).
+
+```js
+suite('hooks', function () {
+    before(function () {
+        // runs before all tests in this suite
+    });
+
+    after(function () {
+        // runs after all tests in this suite
+    });
+
+    beforeEach(function () {
+        // runs before each benchmark test function in this suite
+    });
+
+    afterEach(function () {
+        // runs after each benchmark test function in this suite
+    });
+
+    bench('name', {
+        setup() {
+            // setup is compiled into the test function and runs before each cycle of the test
+        }
+    })
+
+    bench('name', {
+        teardown() {
+            // teardown is compiled into the test function and runs after each cycle of the test
+        }
+    }, testFn)
+
+    // benchmarks here...
+});
+```
 
 ## Reporters
 
