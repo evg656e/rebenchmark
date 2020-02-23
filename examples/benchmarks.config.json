@@ -1,5 +1,11 @@
 {
     "benchmarks": [
         "examples/benchmarks/**/*.{js,mjs}"
-    ]
+    ],
+    "platform": true,
+    "filter": "fastest",
+    "reporter": "console",
+    "reporterOptions": {
+        "indent": 4
+    }
 }

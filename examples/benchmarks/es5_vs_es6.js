@@ -1,16 +1,16 @@
 suite('es5 vs es6', () => {
     suite('arrow functions', () => {
-        var es5obj = {
+        const es5obj = {
             value: 42,
-            fn: function () { return function () { return es5obj.value; }; }
+            fn() { return function () { return es5obj.value; }; }
         };
-        var es5fn = es5obj.fn();
+        const es5fn = es5obj.fn();
 
-        var es6obj = {
+        const es6obj = {
             value: 42,
-            fn: function () { return () => this.value; }
+            fn() { return () => this.value; }
         };
-        var es6fn = es6obj.fn();
+        const es6fn = es6obj.fn();
 
         bench('es5', es5fn);
         bench('es6', es6fn);
@@ -33,9 +33,9 @@ suite('es5 vs es6', () => {
 
     suite('generator', () => {
         function es5generator() {
-            var i = 0;
+            let i = 0;
             return {
-                next: function () {
+                next() {
                     i++;
                     if (i >= 3) {
                         return { done: true };
@@ -71,5 +71,4 @@ suite('es5 vs es6', () => {
         bench('es5', es5fn);
         bench('es6', es6fn);
     });
-
 });

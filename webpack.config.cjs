@@ -5,7 +5,7 @@ const { optimizeMinimize } = yargs.alias('p', 'optimize-minimize').argv;
 
 module.exports = {
     entry: {
-        rebenchmark: './lib/browser.js'
+        rebenchmark: './browser-entry.js'
     },
 
     output: {

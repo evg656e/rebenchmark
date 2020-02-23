@@ -3,12 +3,15 @@
   - [x] update dependencies
   - [x] code style
   - [x] cli arguments
-  - [ ] markdown readme
+  - [x] markdown readme
   - [x] drop coffescript
 - [ ] features
   - [x] config files
   - [x] browsers build
+    - [ ] legacy browsers support (?)
   - [x] becnhmarks pending
   - [x] html reporter
   - [ ] bench.skip, suite.skip, bench.only, suite.only
   - [ ] typescript support
+    - [ ] @types/rebenchmark
+    - [ ] ts example
