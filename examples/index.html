@@ -13,10 +13,10 @@
 <body>
     <pre id="rebenchmark"></pre> <!-- Output goes here -->
 
-    <script src="https://unpkg.com/rebenchmark/umd/stage/browser/rebenchmark.min.js" data-filter="fastest"
+    <script src="../stage/browser/rebenchmark.js" data-filter="fastest"
         data-platform="true"></script>
     <script src="benchmarks/es5_vs_es6.js"></script>
-    <script src="../benchmarks/string.js">
+    <script>
         suite('find in string', () => {
             bench('RegExp#test', () => /o/.test('Hello World!'));
             bench('String#indexOf', () => 'Hello World!'.indexOf('o') > -1);
