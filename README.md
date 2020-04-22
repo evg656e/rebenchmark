@@ -121,15 +121,25 @@ suite('es5 vs es6', () => {
 Output:
 
 ```console
-$ rebenchmark
+$ rebenchmark -pO results=table
 
+Node.js 13.13.0 on Win32 64-bit
 [es5 vs es6]
   [arrow functions]
-    es5 x 79,383,329 ops/sec ±0.95% (89 runs sampled)
-    es6 x 80,249,618 ops/sec ±1.21% (83 runs sampled)
+    es5 x 957,326,571 ops/sec ±1.53% (94 runs sampled)
+    es6 x 957,566,235 ops/sec ±1.40% (93 runs sampled)
   [classes]
-    es5 x 70,144,602 ops/sec ±0.41% (91 runs sampled)
-    es6 x 36,864,672 ops/sec ±1.27% (87 runs sampled)
+    es5 x 932,924,301 ops/sec ±1.26% (92 runs sampled)
+    es6 x 896,497,968 ops/sec ±2.84% (91 runs sampled)
+  [generator]
+    es5 x 15,930,495 ops/sec ±1.70% (89 runs sampled)
+    es6 x 16,374,339 ops/sec ±1.90% (89 runs sampled)
+┌─────────┬─────────────────┬───────────┬───────────┐
+│ (bench) │ arrow functions │  classes  │ generator │
+├─────────┼─────────────────┼───────────┼───────────┤
+│   es5   │    2% slower    │  fastest  │ 3% slower │
+│   es6   │     fastest     │ 2% slower │  fastest  │
+└─────────┴─────────────────┴───────────┴───────────┘
 ```
 
 ### Benchmarking Asynchronous Functions
