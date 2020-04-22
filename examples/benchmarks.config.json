@@ -5,6 +5,6 @@
     "platform": true,
     "reporter": "console",
     "reporterOptions": {
-        "filter": "fastest"
+        "results": "table"
     }
 }

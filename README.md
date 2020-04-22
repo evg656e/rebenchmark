@@ -31,7 +31,7 @@ Based on @venkatperi's [bench-runner](https://github.com/venkatperi/bench-runner
 
 Install with `npm`:
 
-```bash
+```console
 npm install rebenchmark -g
 mkdir benchmarks
 $EDITOR benchmarks/string.js # open with your favorite editor
@@ -49,14 +49,20 @@ suite('find in string', () => {
 
 Back in the terminal:
 
-```
-$ rebenchmark -f fastest
+```console
+$ rebenchmark -O results=table
 
 [find in string]
-  RegExp#test x 11,841,755 ops/sec ±3.00% (89 runs sampled)
-  String#indexOf x 30,491,086 ops/sec ±0.45% (92 runs sampled)
-  String#match x 8,287,739 ops/sec ±2.57% (88 runs sampled)
-fastest: String#indexOf
+  RegExp#test x 37,304,988 ops/sec ±1.81% (88 runs sampled)
+  String#indexOf x 873,212,283 ops/sec ±1.68% (89 runs sampled)
+  String#match x 17,030,626 ops/sec ±1.25% (85 runs sampled)
+┌────────────────┬────────────────┐
+│    (bench)     │ find in string │
+├────────────────┼────────────────┤
+│  RegExp#test   │   96% slower   │
+│ String#indexOf │    fastest     │
+│  String#match  │   98% slower   │
+└────────────────┴────────────────┘
 ```
 
 ## Suites & Benchmarks
@@ -114,8 +120,8 @@ suite('es5 vs es6', () => {
 
 Output:
 
-```
-$ rebenchmark -g es5
+```console
+$ rebenchmark
 
 [es5 vs es6]
   [arrow functions]
@@ -137,7 +143,7 @@ suite('deferred', () => {
 ```
 
 Output:
-```
+```console
 [deferred]
   timeout x 9.72 ops/sec ±0.41% (49 runs sampled)
 ```
@@ -156,7 +162,7 @@ suite('buffer allocation', () => {
 
 The above code will produce a suite with multiple benchmarks:
 
-```
+```console
 [buffer allocation]
   1024 x 2,958,389 ops/sec ±2.85% (81 runs sampled)
   2048 x 1,138,591 ops/sec ±2.42% (52 runs sampled)
@@ -169,7 +175,7 @@ The above code will produce a suite with multiple benchmarks:
 
 ### CLI
 
-```
+```console
 rebenchmark [options] <benchmarks..>
 
 Options:
@@ -197,7 +203,7 @@ Options:
 
 By default, `rebenchmark` looks for `*.js` files under the `benchmarks/` subdirectory only. To configure where `rebenchmark` looks for tests, you may pass your own glob:
 
-```
+```console
 rebenchmark 'benches/**/*.{js,mjs}'
 ```
 
@@ -205,7 +211,7 @@ rebenchmark 'benches/**/*.{js,mjs}'
 
 Run benchmarks files with paths match the given regex, e.g.:
 
-```
+```console
 rebenchmark -i string
 ```
 
@@ -213,7 +219,7 @@ rebenchmark -i string
 
 Skip benchmarks files with paths match the given regex, e.g.:
 
-```
+```console
 rebenchmark -x deferred
 ```
 
@@ -251,8 +257,8 @@ The `--reporter` option allows you to specify the reporter that will be used. Co
 
 Reporter-specific options, e.g.:
 
-```
-rebenchmark -R console -O indent=4
+```console
+rebenchmark -R console -O indent=4,results=table,format=full
 ```
 
 **--delay, --init-count, --max-time, --min-samples, --min-time**
@@ -263,7 +269,7 @@ These options are passed directly to `benchmark.js`.
 
 You can save frequently used sets of options to the JSON file and use it when starting the runner:
 
-```
+```console
 rebenchmark -c rebenchmark.config.json
 ```
 
@@ -325,10 +331,10 @@ Automatic setup (default):
 
 <body>
     <!-- The output is printed to the element with the identifier 'rebenchmark', if any, and duplicated to the console -->
-    <pre id="rebenchmark"></pre> 
+    <pre id="rebenchmark"></pre>
 
     <!-- Options can be passed using data-attributes -->
-    <script src="https://unpkg.com/rebenchmark/stage/browser/rebenchmark.min.js" data-platform="true"></script> 
+    <script src="https://unpkg.com/rebenchmark/stage/browser/rebenchmark.min.js" data-platform="true"></script>
     <script src="benchmarks/es5_vs_es6.js"></script>
     <script>
         suite('find in string', () => {
@@ -357,10 +363,10 @@ Manual setup:
 </head>
 
 <body>
-    <pre id="rebenchmark"></pre> 
+    <pre id="rebenchmark"></pre>
 
     <!-- To disable automatic setup, set "data-no-auto-setup" to "true" -->
-    <script src="https://unpkg.com/rebenchmark/stage/browser/rebenchmark.min.js" data-no-auto-setup="true"></script> 
+    <script src="https://unpkg.com/rebenchmark/stage/browser/rebenchmark.min.js" data-no-auto-setup="true"></script>
     <script>
         rebenchmark.setup({
             reporter: new rebenchmark.reporters.HTMLReporter({
@@ -386,6 +392,13 @@ Manual setup:
 </body>
 
 </html>
+```
+
+### Legacy browsers support
+
+At the moment, the main entry point is compiling using ES2015. If you need support for older browsers, use `rebenchmark-legacy.js` or `rebenchmark-legacy.min.js`, e.g.:
+```html
+<script src="https://unpkg.com/rebenchmark/stage/browser/rebenchmark-legacy.min.js"></script>
 ```
 
 ## Hooks
@@ -434,7 +447,17 @@ The default reporter. Pretty prints results via `console.log`.
 
 Options:
   * `indent` - number of spaces used to insert white space into the output for readability purposes
-  * `filter` - print filtered  (e.g. fastest) benchmark after suite (choices: "fastest", "slowest", "successful")
+  * `results` - print benchmark results. The possible values are `table`, which displays the results in a table form, or `filter`, which displays single line with the filtered results.
+
+  You can specify `format` option for `table` results, choices: `full`, `short` (default).
+  You can specify `filter` option option for `filter` results, choices: `fastest` (default), `slowest`, `successful`.
+
+Examples:
+```console
+rebenchmark -O results=table
+rebenchmark -O results=table,format=full
+rebenchmark -O results=filter,filter=fastest
+```
 
 ### json
 

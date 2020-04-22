@@ -1,6 +1,0 @@
-package-lock.json
-.vscode/
-examples/
-TODO.md
-test/
-webpack.config.cjs

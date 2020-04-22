@@ -8,13 +8,14 @@
 - [ ] features
   - [x] config files
   - [x] browsers build
-    - [ ] legacy browsers support (?)
+    - [x] legacy browsers support
   - [x] becnhmarks pending
   - [x] html reporter
-  - [ ] results comparison
-    - [ ] bars
-    - [ ] table
+  - [ ] results
+    - [ ] bar diagram (?)
+    - [x] table
   - [ ] bench.skip, suite.skip, bench.only, suite.only
   - [ ] typescript support
     - [ ] @types/rebenchmark
     - [ ] ts example
+  - [ ] warnings on missing files or empty files

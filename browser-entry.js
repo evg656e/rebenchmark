@@ -1,4 +1,4 @@
-import BaseReporter from './lib/reporters/BaseReporter';
+import { BaseReporter } from './lib/reporters/BaseReporter';
 import { reporters } from './lib/reporters/index';
 import { setup, run, resetOptions } from './lib/builder';
 
@@ -13,8 +13,11 @@ globalThis.rebenchmark = {
 const scriptOpts = {
     platform: true,
     reporter: 'html',
-    reporterOptions: 'root=#rebenchmark,filter=fastest',
-    ...document && document.currentScript && document.currentScript.dataset,
+    reporterOptions: 'root=#rebenchmark,results=table',
+    ...document?.currentScript?.dataset,
     autoRun: true
 };
-!scriptOpts.noAutoSetup && setup(scriptOpts);
+
+if (!scriptOpts.noAutoSetup) {
+    setup(scriptOpts);
+}
