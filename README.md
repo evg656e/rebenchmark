@@ -291,10 +291,11 @@ rebenchmark.config.json:
         "benches/**/*.js"
     ],
     "platform": true,
-    "filter": "fastest",
     "reporter": "console",
     "reporterOptions": {
-        "indent": 4
+        "indent": 4,
+        "results": "table",
+        "format": "full"
     }
 }
 ```
@@ -381,7 +382,7 @@ Manual setup:
         rebenchmark.setup({
             reporter: new rebenchmark.reporters.HTMLReporter({
                 root: document.querySelector('#rebenchmark'),
-                filter: 'fastest'
+                results: 'table'
             }),
             platform: true
         });

@@ -1,4 +1,4 @@
-import { BaseReporter } from './lib/reporters/BaseReporter';
+import BaseReporter from './lib/reporters/BaseReporter';
 import { reporters } from './lib/reporters/index';
 import { setup, run, resetOptions } from './lib/builder';
 
