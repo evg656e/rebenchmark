@@ -2,6 +2,7 @@
     "benchmarks": [
         "examples/benchmarks/**/*.{js,mjs}"
     ],
+    "exclude": "empty.js",
     "platform": true,
     "reporter": "console",
     "reporterOptions": {

@@ -17,5 +17,8 @@
   - [ ] bench.skip, suite.skip, bench.only, suite.only
   - [ ] typescript support
     - [ ] @types/rebenchmark
-    - [ ] ts example
+    - [ ] ts example (ts-node + https://github.com/TypeStrong/ts-node/issues/1007)
+  - [ ] alt builds (?)
+    - [ ] deno
+    - [ ] qml
   - [x] warnings on missing files or empty files
