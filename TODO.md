@@ -18,4 +18,4 @@
   - [ ] typescript support
     - [ ] @types/rebenchmark
     - [ ] ts example
-  - [ ] warnings on missing files or empty files
+  - [x] warnings on missing files or empty files
