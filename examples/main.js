@@ -1,4 +1,4 @@
-import { suite, bench, run, resetOptions, reporters } from '../index';
+import { suite, bench, run, resetOptions, reporters } from '../index.js';
 
 resetOptions({
     reporter: new reporters.ConsoleReporter({ indent: 4 }),

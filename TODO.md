@@ -1,10 +1,11 @@
-- [ ] refactorings
+- [x] refactorings
   - [x] es modules
   - [x] update dependencies
   - [x] code style
   - [x] cli arguments
   - [x] markdown readme
   - [x] drop coffescript
+  - [ ] rid of --experimental-specifier-resolution=node
 - [ ] features
   - [x] config files
   - [x] browsers build
@@ -16,9 +17,10 @@
     - [x] table
   - [ ] bench.skip, suite.skip, bench.only, suite.only
   - [ ] typescript support
-    - [ ] @types/rebenchmark
+    - [ ] typings
     - [ ] ts example (ts-node + https://github.com/TypeStrong/ts-node/issues/1007)
   - [ ] alt builds (?)
     - [ ] deno
     - [ ] qml
+    - [ ] legacy node support
   - [x] warnings on missing files or empty files

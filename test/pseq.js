@@ -1,5 +1,5 @@
 import { deepEqual } from 'assert';
-import { pseq } from '../lib/util/pseq';
+import { pseq } from '../lib/util/pseq.js';
 
 describe('pseq', () => {
     const arr = [1, 2, 3, 4, 5];

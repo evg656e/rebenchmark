@@ -1,6 +1,6 @@
-import BaseReporter from './lib/reporters/BaseReporter';
-import { reporters } from './lib/reporters/index';
-import { setup, run, resetOptions } from './lib/builder';
+import BaseReporter from './lib/reporters/BaseReporter.js';
+import { reporters } from './lib/reporters/index.js';
+import { setup, run, resetOptions } from './lib/builder.js';
 
 globalThis.rebenchmark = {
     setup,

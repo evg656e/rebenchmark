@@ -1,19 +1,19 @@
 {
   "name": "rebenchmark",
-  "version": "1.1.2",
+  "version": "1.2.0",
   "description": "Benchmark.js runner for Node.js and browsers with BDD interface (like Mocha).",
   "main": "index.js",
   "bin": "./bin/rebenchmark.js",
   "type": "module",
   "engines": {
-    "node": ">=13.2.0"
+    "node": ">=14.0.0"
   },
   "scripts": {
-    "start": "node --harmony-optional-chaining --harmony-nullish --experimental-specifier-resolution=node ./bin/rebenchmark",
+    "start": "node ./bin/rebenchmark",
     "build": "npm run build:dev && npm run build:prod",
     "build:dev": "webpack --config=webpack.config.cjs --mode development",
     "build:prod": "webpack --config=webpack.config.cjs -p",
-    "test": "node --harmony-optional-chaining --harmony-nullish --experimental-specifier-resolution=node ./node_modules/mocha/bin/mocha"
+    "test": "node ./node_modules/mocha/bin/mocha"
   },
   "repository": {
     "type": "git",
@@ -36,21 +36,21 @@
     "glob-promise": "^3.4.0",
     "lodash": "^4.17.15",
     "platform": "^1.3.5",
-    "styled-cli-table": "^1.0.1",
+    "styled-cli-table": "^1.2.0",
     "yargs": "^15.3.1"
   },
   "devDependencies": {
     "@babel/core": "^7.9.0",
     "@babel/preset-env": "^7.9.5",
-    "@types/lodash": "^4.14.149",
+    "@types/lodash": "^4.14.150",
     "@types/mocha": "^7.0.2",
-    "@types/webpack": "^4.41.11",
+    "@types/webpack": "^4.41.12",
     "@types/yargs": "^15.0.4",
     "babel-loader": "^8.1.0",
     "core-js": "^3.6.5",
     "chai": "^4.2.0",
-    "mocha": "^7.1.1",
-    "webpack": "^4.42.1",
+    "mocha": "^7.1.2",
+    "webpack": "^4.43.0",
     "webpack-cli": "^3.3.11"
   },
   "files": [
