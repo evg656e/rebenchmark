@@ -5,7 +5,8 @@
   - [x] cli arguments
   - [x] markdown readme
   - [x] drop coffescript
-  - [ ] rid of --experimental-specifier-resolution=node
+  - [x] rid of --experimental-specifier-resolution=node
+  - [ ] typescript rewrite
 - [ ] features
   - [x] config files
   - [x] browsers build
@@ -18,9 +19,9 @@
   - [ ] bench.skip, suite.skip, bench.only, suite.only
   - [ ] typescript support
     - [ ] typings
-    - [ ] ts example (ts-node + https://github.com/TypeStrong/ts-node/issues/1007)
+    - [x] ts example (ts-node + https://github.com/TypeStrong/ts-node/issues/1007)
   - [ ] alt builds (?)
     - [ ] deno
     - [ ] qml
-    - [ ] legacy node support
+    - [ ] cjs node support
   - [x] warnings on missing files or empty files
