@@ -500,12 +500,12 @@ suite('forLoop', () => {
             callbackfn.call(thisArg, array[i], i, array);
     }
 
-    [
+    ([
         ['empty array', []],
         ['small array', new Array(10).fill(1)],
         ['medium array', new Array(100).fill(1)],
         ['large array', new Array(10000).fill(1)]
-    ].forEach(([title, array]: [string, number[]]) => {
+    ] as [string, number[]][]).forEach(([title, array]) => {
         suite(title, () => {
             bench('conventional for', () => {
                 let sum = 0;
