@@ -6,22 +6,20 @@
   - [x] markdown readme
   - [x] drop coffescript
   - [x] rid of --experimental-specifier-resolution=node
-  - [ ] typescript rewrite
-- [ ] features
+  - [x] typescript rewrite
+- [x] features
   - [x] config files
-  - [x] browsers build
-    - [x] legacy browsers support
   - [x] becnhmarks pending
   - [x] html reporter
-  - [ ] results
+  - [x] results
     - [ ] bar diagram (?)
     - [x] table
-  - [ ] bench.skip, suite.skip, bench.only, suite.only
-  - [ ] typescript support
-    - [ ] typings
+  - [x] bench.skip, suite.skip, bench.only, suite.only
+  - [ ] progress reporting
+  - [x] browsers build
+    - [x] legacy browsers support
+  - [x] cjs node support
+  - [x] typescript support
+    - [x] typings
     - [x] ts example (ts-node + https://github.com/TypeStrong/ts-node/issues/1007)
-  - [ ] alt builds (?)
-    - [ ] deno
-    - [ ] qml
-    - [ ] cjs node support
   - [x] warnings on missing files or empty files

@@ -1,0 +1,21 @@
+{
+    "compilerOptions": {
+        "target": "esnext",
+        "module": "esnext",
+        "moduleResolution": "node",
+        "strict": true,
+        "declaration": true,
+        "esModuleInterop": true,
+        "types": [
+            "node",
+            "lodash",
+            "benchmark",
+            "platform",
+            "yargs",
+            "glob"
+        ]
+    },
+    "include": [
+        "../lib/**/*"
+    ]
+}

@@ -1,0 +1,16 @@
+{
+    "extends": "./tsconfig.base",
+    "compilerOptions": {
+        "target": "es2019",
+        "module": "commonjs",
+        "outDir": "../commonjs",
+        "plugins": [
+            {
+                "transform": "ts-transformer-replace-paths",
+                "replaceImportPaths": {
+                    "^styled-cli-table/module/(.+)": "styled-cli-table/commonjs/$1"
+                }
+            }
+        ]
+    }
+}

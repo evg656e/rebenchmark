@@ -1,0 +1,16 @@
+{
+    "extends": "./tsconfig.base",
+    "compilerOptions": {
+        "outDir": "../module",
+        "plugins": [
+            {
+                "transform": "@evg656e/typescript-transformer-append-js-extension/output/index.js",
+                "after": true,
+                "forceInclude": [
+                    "^lodash/.*",
+                    "^styled-cli-table/.*"
+                ]
+            }
+        ]
+    }
+}

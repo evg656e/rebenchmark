@@ -1,9 +1,8 @@
-import { suite, bench, run, resetOptions, reporters } from '../index.js';
+import { suite, bench, run, resetOptions, reporters } from '../module/node/index.js';
 
 resetOptions({
-    reporter: new reporters.ConsoleReporter({ indent: 4 }),
-    platform: true,
-    filter: 'fastest'
+    reporter: new reporters.ConsoleReporter({ indent: 4, results: true }),
+    platform: true
 });
 
 suite('find in string', () => {

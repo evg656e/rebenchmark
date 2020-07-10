@@ -11,15 +11,17 @@ Based on @venkatperi's [bench-runner](https://github.com/venkatperi/bench-runner
 ## Table of contents
 
 * [Getting Started](#Getting%20Started)
-* [Suites & Benchmarks](#2Suites%20%26%20Benchmarks)
+* [Suites & Benchmarks](#Suites%20%26%20Benchmarks)
   * [Paths](#Paths)
   * [Nested Suites & Benchmarks](#Nested%20Suites%20%26%20Benchmarks)
   * [Benchmarking Asynchronous Functions](#Benchmarking%20Asynchronous%20Functions)
   * [Dynamically Generating Benchmarks](#Dynamically%20Generating%20Benchmarks)
+  * [Exclusive & Inclusive Benchmarks](#Exclusive%20%26%20Inclusive%20Benchmarks)
  * [Usage](#Usage)
    * [CLI](#CLI)
    * [Node.js](#Node.js)
    * [Browsers](#Browsers)
+   * [TypeScript](#TypeScript)
 * [Hooks](#Hooks)
 * [Reporters](#Reporters)
   * [console](#console)
@@ -50,20 +52,15 @@ suite('find in string', () => {
 Back in the terminal:
 
 ```console
-$ rebenchmark -O results=table
+$ rebenchmark
 
 [find in string]
   RegExp#test x 37,304,988 ops/sec ±1.81% (88 runs sampled)
   String#indexOf x 873,212,283 ops/sec ±1.68% (89 runs sampled)
   String#match x 17,030,626 ops/sec ±1.25% (85 runs sampled)
-┌────────────────┬────────────────┐
-│    (bench)     │ find in string │
-├────────────────┼────────────────┤
-│  RegExp#test   │   96% slower   │
-│ String#indexOf │    fastest     │
-│  String#match  │   98% slower   │
-└────────────────┴────────────────┘
 ```
+
+For elder versions of node (< 12), use `rebenchmark-cjs` command instead.
 
 ## Suites & Benchmarks
 
@@ -121,9 +118,8 @@ suite('es5 vs es6', () => {
 Output:
 
 ```console
-$ rebenchmark -pO results=table
+$ rebenchmark
 
-Node.js 13.13.0 on Win32 64-bit
 [es5 vs es6]
   [arrow functions]
     es5 x 957,326,571 ops/sec ±1.53% (94 runs sampled)
@@ -134,12 +130,6 @@ Node.js 13.13.0 on Win32 64-bit
   [generator]
     es5 x 15,930,495 ops/sec ±1.70% (89 runs sampled)
     es6 x 16,374,339 ops/sec ±1.90% (89 runs sampled)
-┌─────────┬─────────────────┬───────────┬───────────┐
-│ (bench) │ arrow functions │  classes  │ generator │
-├─────────┼─────────────────┼───────────┼───────────┤
-│   es5   │    2% slower    │  fastest  │ 3% slower │
-│   es6   │     fastest     │ 2% slower │  fastest  │
-└─────────┴─────────────────┴───────────┴───────────┘
 ```
 
 ### Benchmarking Asynchronous Functions
@@ -180,6 +170,88 @@ The above code will produce a suite with multiple benchmarks:
   8192 x 324,956 ops/sec ±1.56% (44 runs sampled)
   16384 x 199,686 ops/sec ±0.94% (80 runs sampled)
 ```
+
+### Exclusive & Inclusive Benchmarks
+
+The exclusivity feature allows you to run only the specified suite or benchmark by appending `.only()` to the function. Here’s an example of executing only a particular suite:
+
+```js
+suite('es5 vs es6', () => {
+    suite.only('arrow functions', () => {
+        const es5obj = {
+            value: 42,
+            fn() { return function () { return es5obj.value; }; }
+        };
+        const es5fn = es5obj.fn();
+
+        const es6obj = {
+            value: 42,
+            fn() { return () => this.value; }
+        };
+        const es6fn = es6obj.fn();
+
+        bench('es5', es5fn);
+        bench('es6', es6fn);
+    });
+
+    suite('classes', () => {
+        function ES5() { this.foo = 'bar'; }
+
+        ES5.prototype.bar = function () { };
+
+        class ES6 {
+            constructor() { this.foo = 'bar'; }
+
+            bar() { }
+        }
+
+        bench('es5', () => new ES5());
+        bench('es6', () => new ES6());
+    });
+});
+```
+
+Only `arrow functions` suite will be run.
+
+The inclusitiy feature is the inverse of `.only()`. By appending `.skip()`, you may tell runner to ignore test case(s). Here’s an example of skipping an individual test:
+
+```js
+suite('es5 vs es6', () => {
+    suite.skip('arrow functions', () => {
+        const es5obj = {
+            value: 42,
+            fn() { return function () { return es5obj.value; }; }
+        };
+        const es5fn = es5obj.fn();
+
+        const es6obj = {
+            value: 42,
+            fn() { return () => this.value; }
+        };
+        const es6fn = es6obj.fn();
+
+        bench('es5', es5fn);
+        bench('es6', es6fn);
+    });
+
+    suite('classes', () => {
+        function ES5() { this.foo = 'bar'; }
+
+        ES5.prototype.bar = function () { };
+
+        class ES6 {
+            constructor() { this.foo = 'bar'; }
+
+            bar() { }
+        }
+
+        bench('es5', () => new ES5());
+        bench('es6', () => new ES6());
+    });
+});
+```
+
+`arrow functions` suite will be skipped.
 
 ## Usage
 
@@ -268,7 +340,7 @@ The `--reporter` option allows you to specify the reporter that will be used. Co
 Reporter-specific options, e.g.:
 
 ```console
-rebenchmark -R console -O indent=4,results=table,format=full
+rebenchmark -O indent=4,results,format=full
 ```
 
 **--delay, --init-count, --max-time, --min-samples, --min-time**
@@ -294,7 +366,7 @@ rebenchmark.config.json:
     "reporter": "console",
     "reporterOptions": {
         "indent": 4,
-        "results": "table",
+        "results": "true",
         "format": "full"
     }
 }
@@ -324,7 +396,7 @@ run().then(() => {
 
 ### Browsers
 
-Automatic setup (default):
+Automatic setup:
 
 ```html
 <!DOCTYPE html>
@@ -346,7 +418,11 @@ Automatic setup (default):
 
     <!-- Options can be passed using data-attributes -->
     <script src="https://unpkg.com/rebenchmark/stage/browser/rebenchmark.min.js" data-platform="true"></script>
+    <!-- Include this script to automatic setup -->
+    <script src="https://unpkg.com/rebenchmark/stage/browser/rebenchmark-autosetup.min.js"></script>
+    <!-- Suites can be specified with files -->
     <script src="benchmarks/es5_vs_es6.js"></script>
+    <!-- Or be the inline scripts -->
     <script>
         suite('find in string', () => {
             bench('RegExp#test', () => /o/.test('Hello World!'));
@@ -377,12 +453,12 @@ Manual setup:
     <pre id="rebenchmark"></pre>
 
     <!-- To disable automatic setup, set "data-no-auto-setup" to "true" -->
-    <script src="https://unpkg.com/rebenchmark/stage/browser/rebenchmark.min.js" data-no-auto-setup="true"></script>
+    <script src="https://unpkg.com/rebenchmark/stage/browser/rebenchmark.min.js"></script>
     <script>
         rebenchmark.setup({
             reporter: new rebenchmark.reporters.HTMLReporter({
                 root: document.querySelector('#rebenchmark'),
-                results: 'table'
+                results: true
             }),
             platform: true
         });
@@ -407,9 +483,108 @@ Manual setup:
 
 ### Legacy browsers support
 
-At the moment, the main entry point is compiling using ES2015. If you need support for older browsers, use `rebenchmark-legacy.js` or `rebenchmark-legacy.min.js`, e.g.:
+At the moment, the main entry point is compiling using ES6+. If you need support for older browsers, use `rebenchmark-legacy.js` or `rebenchmark-legacy.min.js`, e.g.:
 ```html
 <script src="https://unpkg.com/rebenchmark/stage/browser/rebenchmark-legacy.min.js"></script>
+```
+
+### TypeScript
+
+You can write and run benchmarks with TypeScript.
+
+```ts
+/// <reference types="rebenchmark" />
+suite('forLoop', () => {
+    function forEach<T>(array: ArrayLike<T>, callbackfn: (value: T, index: number, array: ArrayLike<T>) => void, thisArg?: any) {
+        for (let i = 0; i < array.length; i++)
+            callbackfn.call(thisArg, array[i], i, array);
+    }
+
+    [
+        ['empty array', []],
+        ['small array', new Array(10).fill(1)],
+        ['medium array', new Array(100).fill(1)],
+        ['large array', new Array(10000).fill(1)]
+    ].forEach(([title, array]: [string, number[]]) => {
+        suite(title, () => {
+            bench('conventional for', () => {
+                let sum = 0;
+                for (let i = 0; i < array.length; i++) {
+                    const value = array[i];
+                    sum += value;
+                    sum += i;
+                    sum += value;
+                }
+                return sum;
+            });
+
+            bench('for of', () => {
+                let sum = 0;
+                let i = 0;
+                for (const value of array) {
+                    sum += value;
+                    sum += i;
+                    sum += value;
+                    i++;
+                }
+                return sum;
+            });
+
+            bench('forEach', () => {
+                let sum = 0;
+                array.forEach((value, i) => {
+                    sum += value;
+                    sum += i;
+                    sum += value
+                });
+                return sum;
+            });
+
+            bench('self-made forEach', () => {
+                let sum = 0;
+                forEach(array, (value, i) => {
+                    sum += value;
+                    sum += i;
+                    sum += value
+                });
+                return sum;
+            });
+        });
+    });
+});
+```
+
+If you don't like [triple-slash directives](https://www.typescriptlang.org/docs/handbook/triple-slash-directives.html#-reference-types-), you can specify types with [types](https://www.typescriptlang.org/docs/handbook/tsconfig-json.html#types-typeroots-and-types) compiler option:
+
+```json
+{
+    "compilerOptions": {
+        "types": [
+            "rebenchmark"
+        ]
+    }
+}
+```
+
+To run benchmarks, install [ts-node](https://github.com/TypeStrong/ts-node), then use following commands.
+
+With ESM modules:
+```console
+node --loader ts-node/esm ./node_modules/rebenchmark/module/node/entry.js -- ./benchmarks/*.ts
+```
+
+With CJS modules:
+```console
+node --require ts-node/register ./node_modules/rebenchmark/commonjs/node/entry.js -- ./benchmarks/*.ts
+```
+
+It is handy to save this command in the `package.json`'s `script` section, e.g.
+```json
+{
+    "scripts": {
+        "ts-bench": "node --loader ts-node/esm ./node_modules/rebenchmark/module/node/entry.js"
+    }
+}
 ```
 
 ## Hooks
@@ -417,20 +592,20 @@ At the moment, the main entry point is compiling using ES2015. If you need suppo
 Hooks must be synchronous since they are called by `benchmark.js` which does not support async hooks at this time. Also, `setup` and `teardown` are compiled into the test function. Including either may place restrictions on the scoping/availability of variables in the test function (see `benchmark.js` [docs](https://benchmarkjs.com/docs) for more information).
 
 ```js
-suite('hooks', function () {
-    before(function () {
+suite('hooks', () => {
+    before(() => {
         // runs before all tests in this suite
     });
 
-    after(function () {
+    after(() => {
         // runs after all tests in this suite
     });
 
-    beforeEach(function () {
+    beforeEach(() => {
         // runs before each benchmark test function in this suite
     });
 
-    afterEach(function () {
+    afterEach(() => {
         // runs after each benchmark test function in this suite
     });
 
@@ -458,16 +633,47 @@ The default reporter. Pretty prints results via `console.log`.
 
 Options:
   * `indent` - number of spaces used to insert white space into the output for readability purposes
-  * `results` - print benchmark results. The possible values are `table`, which displays the results in a table form, or `filter`, which displays single line with the filtered results.
+  * `results` - print benchmark results (boolean).
 
-  You can specify `format` option for `table` results, choices: `full`, `short` (default).
-  You can specify `filter` option option for `filter` results, choices: `fastest` (default), `slowest`, `successful`.
+  You can specify `format` option when `results` option is set, choices: `full`, `short` (default).
 
 Examples:
 ```console
-rebenchmark -O results=table
-rebenchmark -O results=table,format=full
-rebenchmark -O results=filter,filter=fastest
+rebenchmark -O results
+[find in string]
+  RegExp#test x 39,657,648 ops/sec ±2.77% (83 runs sampled)
+  String#indexOf x 916,877,868 ops/sec ±1.76% (90 runs sampled)
+  String#match x 21,233,309 ops/sec ±2.18% (89 runs sampled)
+┌────────────────┬────────────────┐
+│    (bench)     │ find in string │
+├────────────────┼────────────────┤
+│  RegExp#test   │   96% slower   │
+│ String#indexOf │    fastest     │
+│  String#match  │   98% slower   │
+└────────────────┴────────────────┘
+
+rebenchmark -O results,format=full
+[find in string]
+  RegExp#test x 38,496,031 ops/sec ±4.35% (85 runs sampled)
+  String#indexOf x 890,481,584 ops/sec ±1.74% (89 runs sampled)
+  String#match x 19,204,268 ops/sec ±2.12% (83 runs sampled)
+┌────────────────┬─────────────────────┐
+│                │                     │
+│    (bench)     │   find in string    │
+│                │                     │
+├────────────────┼─────────────────────┤
+│                │ 38,496,031 ops/sec  │
+│  RegExp#test   │       ±4.35%        │
+│                │     96% slower      │
+├────────────────┼─────────────────────┤
+│                │ 890,481,584 ops/sec │
+│ String#indexOf │       ±1.74%        │
+│                │       fastest       │
+├────────────────┼─────────────────────┤
+│                │ 19,204,268 ops/sec  │
+│  String#match  │       ±2.12%        │
+│                │     98% slower      │
+└────────────────┴─────────────────────┘
 ```
 
 ### json
